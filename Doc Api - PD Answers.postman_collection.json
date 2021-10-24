@@ -1,0 +1,538 @@
+{
+	"info": {
+		"_postman_id": "4679465a-341f-4de0-960b-334a571df177",
+		"name": "Doc Api - PD Answers",
+		"description": "Esta API possui um sistema de feedback, na qual as contas administradoras registras são capazes de realizar novos posts de perguntas, enquanto as contas colaboradoras podem respondê-las uma única vez, além de terem acesso as outras resposta daquela pergunta.\nOs registros de novos usuários só podem ser feitos por administradores.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Realizando registro",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": null,
+				"description": "Para realizar o registro é obrigatório estar logado em uma conta administradora. Sendo assim, após realizar o login copie \"auth-token\" na header da response e cole na header do post de registro."
+			},
+			"response": [
+				{
+					"name": "Realizando registro",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTc1YmQxNDUzODZkMjZiMTE4YjA2NTAiLCJpYXQiOjE2MzUxMTE4OTd9.f5bFPVkEzOrXfmtuWHDUqY0KcLchhzDyzxaQKYkbfv0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Fernando\",\r\n    \"email\":\"fernando@email.com\",\r\n    \"password\":\"123456\",\r\n    \"role\":\"colaborator\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/user/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"register"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/html; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "10"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"a-zhjUMtbBc3P0WARmNZSvmzRei8c\""
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 24 Oct 2021 21:50:21 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "User saved"
+				}
+			]
+		},
+		{
+			"name": "Realizando login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"pd@email.com\",\r\n    \"password\":\"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/user/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Logando na conta admin",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"pd@email.com\",\r\n    \"password\":\"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/user/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "auth-token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTc1YmQxNDUzODZkMjZiMTE4YjA2NTAiLCJpYXQiOjE2MzUxMTE4OTd9.f5bFPVkEzOrXfmtuWHDUqY0KcLchhzDyzxaQKYkbfv0"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/html; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "24"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"18-PCXxbIpInEEjYu/93DIo+ynflPg\""
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 24 Oct 2021 21:44:57 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "Login feito com sucesso!"
+				}
+			]
+		},
+		{
+			"name": "Todas as questoes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/questions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"questions"
+					]
+				},
+				"description": "Retorna um objeto com todas a perguntas do banco de dados"
+			},
+			"response": [
+				{
+					"name": "Todas as questions",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/questions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"questions"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "133"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"85-6MFs23zAg9p58MEIpe43HJVx+EA\""
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 24 Oct 2021 21:54:23 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"_id\": \"6175be8762abae6ac8707416\",\n        \"description\": \"Vocês estão felizes com a empresa?\",\n        \"userId\": \"6175bd145386d26b118b0650\",\n        \"__v\": 0\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Questao especifica",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null,
+				"description": "Adicionando o /id da questão é possível receber a questão referente ao id com todas as respostas à ela."
+			},
+			"response": [
+				{
+					"name": "Questao especifica",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/questions/6175be8762abae6ac8707416",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"questions",
+								"6175be8762abae6ac8707416"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "157"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"9d-zdbwotNyO5laAPkCwEvPVvx9lVA\""
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 24 Oct 2021 21:56:42 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"question\": {\n        \"_id\": \"6175be8762abae6ac8707416\",\n        \"description\": \"Vocês estão felizes com a empresa?\",\n        \"userId\": \"6175bd145386d26b118b0650\",\n        \"__v\": 0\n    },\n    \"answers\": []\n}"
+				}
+			]
+		},
+		{
+			"name": "Respondendo à uma questao",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTc1YmQxNDUzODZkMjZiMTE4YjA2NTAiLCJpYXQiOjE2MzUxMTMwNzd9.IZXvkrfG5czF7_UdXnU4tRgCEwNmb6-P2vloABlvRt4",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\":\"Felizes!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/questions/6175be8762abae6ac8707416/answer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"questions",
+						"6175be8762abae6ac8707416",
+						"answer"
+					]
+				},
+				"description": "É necessário possuir o 'auth-token' para responder a pergunta. Além disso, cada conta só pode responde-la uma vez"
+			},
+			"response": [
+				{
+					"name": "Respondendo à uma pergunta",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTc1YmQxNDUzODZkMjZiMTE4YjA2NTAiLCJpYXQiOjE2MzUxMTMwNzd9.IZXvkrfG5czF7_UdXnU4tRgCEwNmb6-P2vloABlvRt4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\":\"Felizes!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/questions/6175be8762abae6ac8707416/answer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"questions",
+								"6175be8762abae6ac8707416",
+								"answer"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/html; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "12"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"c-tbF2Lp4LoX7g443IFgNYlzDE9ik\""
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 24 Oct 2021 22:05:47 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "Answer saved"
+				}
+			]
+		},
+		{
+			"name": "Criando uma questao",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTc1YmQxNDUzODZkMjZiMTE4YjA2NTAiLCJpYXQiOjE2MzUxMTM0Mjh9.hSbA4DXvtGmxOUh7DKVO9DlyXtstIkW2rKVPITdaQ2c",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\":\"Qual o melhor produto?\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/questions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"questions"
+					]
+				},
+				"description": "Apenas contas de administradores podem criar questoes"
+			},
+			"response": [
+				{
+					"name": "Criando uma questao",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTc1YmQxNDUzODZkMjZiMTE4YjA2NTAiLCJpYXQiOjE2MzUxMTM0Mjh9.hSbA4DXvtGmxOUh7DKVO9DlyXtstIkW2rKVPITdaQ2c",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\":\"Qual o melhor produto?\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/questions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"questions"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/html; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "14"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"e-kRj+MUX91ztRz+fJvu+WeNvyDn0\""
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 24 Oct 2021 22:10:52 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "Question saved"
+				}
+			]
+		}
+	]
+}
