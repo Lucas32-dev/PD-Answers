@@ -3,6 +3,7 @@ const Question = require('../models/question');
 const Anwser = require('../models/anwser');
 const verify = require('../verifyToken');
 const { questionValidation, anwserValidation } = require('../validation');
+const User = require('../models/user');
 
 router.get('/', async (req,res) => {
     try{
@@ -14,14 +15,18 @@ router.get('/', async (req,res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', verify, async (req, res) => {
+    //Verfica se é um admin
+    const admin = await User.findOne({_id: req.user, role:'admin'});
+    if(!admin) return res.status(401).send('Permission insufficient');
+
     //Valida a pergunta
     const { error } = questionValidation(req.body);
     if(error) return res.status(400).send(error.details[0].message);
 
     const question = new Question({
         description: req.body.description,
-        userId: req.body.userId,
+        userId: req.user,
     });
 
     try{
@@ -49,6 +54,10 @@ router.put('/:questionId/anwser', verify, async(req,res) => {
     //Valida a resposta
     const { error } = anwserValidation(req.body);
     if(error) return res.status(400).send(error.details[0].message);
+
+    //Verifica se a pergunta já foi respondida pelo user
+    const anwserExist = await Anwser.findOne({questionId: req.params.questionId, userId: req.user});
+    if(anwserExist) return res.status(400).json('Question already anwsered')
 
     const answer = new Anwser({
         description: req.body.description,
