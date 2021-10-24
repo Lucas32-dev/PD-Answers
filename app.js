@@ -10,6 +10,15 @@ mongoose.connect(process.env.CONNECT_DB, () => {
     console.log("Conectado ao DB com sucesso!");
 });
 
+//Importing routes
+const questionsRoute = require('./routes/questions');
+
+//Middlewares
+app.use(express.json()); 
+
+//Middlewares routes
+app.use('/questions', questionsRoute);
+
 app.get('/', (req,res) => {
     res.send("Bem vindo!");
 });
