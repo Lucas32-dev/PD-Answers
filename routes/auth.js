@@ -1,11 +1,16 @@
 const router = require('express').Router();
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
-const user = require('../models/user');
 const jwt = require('jsonwebtoken');
+const verify = require('../verifyToken');
 const { registerValidation, loginValidation } = require('../validation'); 
 
-router.post('/register', async (req,res) => {
+router.post('/register', verify, async (req,res) => {
+    //Verifica se é um adiministrador
+    const admin = await User.findOne({_id: req.user});
+    if(admin.role != "admin") return res.status(401).send('Permission insufficient');
+    console.log(admin)
+
     //Validando data
     const { error } = registerValidation(req.body);
     if(error) return res.status(400).send(error.details[0].message);
@@ -22,7 +27,7 @@ router.post('/register', async (req,res) => {
         name: req.body.name,
         email: req.body.email,
         password: hashedPassword,
-        role: 'colaborator'
+        role: req.body.role
     });
 
     try{
@@ -49,8 +54,7 @@ router.post('/login', async (req,res) => {
 
     //Gerando jwt
     const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET);
-    res.header('auth-token', token).send('Logged-in');
+    res.header('auth-token', token).send('Login feito com sucesso!');
 })
-
 
 module.exports = router;

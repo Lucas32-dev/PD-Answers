@@ -6,9 +6,7 @@ const questionValidation = data => {
         description: Joi.string()
             .required()
             .min(1)
-            .max(1000),
-        userId: Joi.string()
-            .required()
+            .max(1000)
     })
 
     return schema.validate(data);
@@ -41,7 +39,9 @@ const registerValidation = data => {
         password: Joi.string()
             .required()
             .min(6)
-            .max(255)
+            .max(255),
+        role: Joi.string()
+            .required()
     })
 
     return schema.validate(data);
