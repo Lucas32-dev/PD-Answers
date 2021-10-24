@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Question = require('../models/question');
+const Anwser = require('../models/anwser');
 const { required } = require('@hapi/joi');
 const { questionValidation, anwserValidation } = require('../validation');
 
@@ -14,6 +15,7 @@ router.get('/', async (req,res) => {
 });
 
 router.post('/', async (req, res) => {
+    
     //Valida a pergunta
     const { error } = questionValidation(req.body);
     if(error) return res.status(400).send(error.details[0].message);
@@ -30,6 +32,39 @@ router.post('/', async (req, res) => {
     catch(err){
 
     }
-})
+});
+
+router.get('/:questionId', async(req,res) => {
+    //Encotra resposta 
+    try{
+        const question = await Question.findById(req.params.questionId);
+        const anwsers = await Anwser.find({questionId: req.params.questionId});
+        res.json({question, anwsers});
+    }
+    catch(err){
+
+    }
+});
+
+router.put('/:questionId/anwser', async(req,res) => {
+    //Valida a resposta
+    const { error } = anwserValidation(req.body);
+    if(error) return res.status(400).send(error.details[0].message);
+
+    const answer = new Anwser({
+        description: req.body.description,
+        questionId: req.body.questionId,
+        userId: req.body.userId
+    });
+
+    try{
+        const savedAnwser = await answer.save();
+        res.send('Anwser saved');
+    }
+    catch(err){
+
+    }
+});
+
 
 module.exports = router;
