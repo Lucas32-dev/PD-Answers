@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const Question = require('../models/question');
 const Anwser = require('../models/anwser');
-const { required } = require('@hapi/joi');
+const verify = require('../verifyToken');
 const { questionValidation, anwserValidation } = require('../validation');
 
 router.get('/', async (req,res) => {
@@ -15,7 +15,6 @@ router.get('/', async (req,res) => {
 });
 
 router.post('/', async (req, res) => {
-    
     //Valida a pergunta
     const { error } = questionValidation(req.body);
     if(error) return res.status(400).send(error.details[0].message);
@@ -46,15 +45,15 @@ router.get('/:questionId', async(req,res) => {
     }
 });
 
-router.put('/:questionId/anwser', async(req,res) => {
+router.put('/:questionId/anwser', verify, async(req,res) => {
     //Valida a resposta
     const { error } = anwserValidation(req.body);
     if(error) return res.status(400).send(error.details[0].message);
 
     const answer = new Anwser({
         description: req.body.description,
-        questionId: req.body.questionId,
-        userId: req.body.userId
+        questionId: req.params.questionId,
+        userId: req.user
     });
 
     try{

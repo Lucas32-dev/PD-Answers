@@ -20,11 +20,7 @@ const anwserValidation = data => {
         description: Joi.string()
             .required()
             .min(1)
-            .max(1000),
-        questionId: Joi.string()
-            .required(),
-        userId: Joi.string()
-            .required()
+            .max(1000)
     })
 
     return schema.validate(data);
@@ -67,6 +63,7 @@ const loginValidation = data => {
 
     return schema.validate(data);
 }
+
 module.exports.anwserValidation = anwserValidation;
 module.exports.questionValidation = questionValidation;
 module.exports.registerValidation = registerValidation;
