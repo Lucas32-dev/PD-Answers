@@ -10,14 +10,16 @@ mongoose.connect(process.env.CONNECT_DB, () => {
     console.log("Conectado ao DB com sucesso!");
 });
 
-//Importing routes
+//Importando routes
 const questionsRoute = require('./routes/questions');
+const authRoute = require('./routes/auth');
 
 //Middlewares
 app.use(express.json()); 
 
 //Middlewares routes
 app.use('/questions', questionsRoute);
+app.use('/user', authRoute);
 
 app.get('/', (req,res) => {
     res.send("Bem vindo!");
