@@ -30,5 +30,44 @@ const anwserValidation = data => {
     return schema.validate(data);
 }
 
+//Validando registro
+const registerValidation = data => {
+    const schema = new Joi.object({
+        name: Joi.string()
+            .required()
+            .min(3)
+            .max(20),
+        email: Joi.string()
+            .required()
+            .email()
+            .min(6)
+            .max(255),
+        password: Joi.string()
+            .required()
+            .min(6)
+            .max(255)
+    })
+
+    return schema.validate(data);
+}
+
+//Validando login
+const loginValidation = data => {
+    const schema = new Joi.object({
+        email: Joi.string()
+            .required()
+            .email()
+            .min(6)
+            .max(255),
+        password: Joi.string()
+            .required()
+            .min(6)
+            .max(255)
+    })
+
+    return schema.validate(data);
+}
 module.exports.anwserValidation = anwserValidation;
 module.exports.questionValidation = questionValidation;
+module.exports.registerValidation = registerValidation;
+module.exports.loginValidation = loginValidation;
